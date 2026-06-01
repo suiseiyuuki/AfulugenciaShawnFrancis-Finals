@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>My Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <script>
+    /* ============================================================
+       IMAGE CONFIGURATION — Edit these paths to update your images
+       ============================================================ */
+    const IMAGES = {
+      profile:  "images/profile.jpg",
+      project1: "images/project1.jpg",
+      project2: "images/project2.jpg",
+      project3: "images/project3.jpg",
+      cert1:    "images/cert1.jpg",
+      cert2:    "images/cert2.jpg",
+      cert3:    "images/cert3.jpg"
+    };
+
+    /* ============================================================
+       CERTIFICATE CONFIGURATION — Edit paths/names here
+       ============================================================ */
+    const CERTIFICATES = [
+      { name: "Databases", img: "images/cert1.jpg", pdf: "certificates/webdev.pdf" },
+      { name: "HTML and Css",             img: "images/cert2.jpg", pdf: "certificates/java.pdf"   },
+      { name: "Excel Associate",            img: "images/cert3.jpg", pdf: "certificates/uiux.pdf"  }
+    ];
+
+    /* ============================================================
+       PROJECT CONFIGURATION — Edit titles/images here
+       ============================================================ */
+    const PROJECTS = [
+      { name: "Client Project",   img: "images/project1.jpg" },
+      { name: "Iris Data set",   img: "images/project2.jpg" },
+      { name: "NU portal", img: "images/project3.jpg" }
+    ];
+
+    /* ============================================================
+       SOCIAL MEDIA LINKS — Replace with your own URLs
+       ============================================================ */
+    const SOCIAL = {
+      instagram: "https://www.instagram.com/sha.wnfrancis?igsh=MXFnZmNlMWp2aG9zMQ==",
+      facebook:  "https://www.facebook.com/share/1BGvRkdVkD/",
+      github:    "https://github.com/suiseiyuuki",
+      twitter:   "https://twitter.com"
+    };
+
+    /* ============================================================
+       FORMSUBMIT — Replace with your own email address
+       ============================================================ */
+    const CONTACT_EMAIL = "afulugenciasd@students.nu-clark.edu.ph";
+  </script>
+
+  <style>
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: "Source Sans 3", Helvetica, sans-serif;
+      font-weight: 300;
+      font-size: 16pt;
+      line-height: 2;
+      color: #ffffff;
+      background: #1b1f22;
+    }
+    @media (max-width: 1680px) { body { font-size: 13pt; } }
+    @media (max-width: 980px)  { body { font-size: 11pt; } }
+    @media (max-width: 736px)  { body { font-size: 10pt; } }
+    ul { list-style: none; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== FIXED BG ===== */
+/* ===== FIXED BG ===== */
+#bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.55)
+    ),
+    url('images/background.jpg');
+
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  transition: filter 0.5s ease;
+}
+
+#bg.is-blurred {
+  filter: blur(8px) brightness(0.45);
+}
+
+    /* ===== PAGE WRAPPER ===== */
+    #wrapper {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* ===== FADE-IN COVER ===== */
+    #fade-cover {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #1b1f22;
+      pointer-events: none;
+      transition: opacity 1.2s ease;
+    }
+    body.loaded #fade-cover { opacity: 0; }
+
+    /* ===== HEADER ===== */
+    #header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: default;
+      transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
+      z-index: 2;
+      padding: 0 2rem;
+    }
+    #header.is-hidden {
+      opacity: 0;
+      transform: scale(0.95);
+      filter: blur(4px);
+      pointer-events: none;
+    }
+    #header .logo {
+      font-size: 4.5rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      border: solid 5px rgba(255,255,255,0.85);
+      padding: 0.6rem 1.4rem;
+      display: inline-block;
+    }
+    @media (max-width: 736px) { #header .logo { font-size: 2.5rem; border-width: 3px; } }
+    #header p {
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin: 0 0 2rem;
+    }
+    @media (max-width: 736px) { #header p { font-size: 0.85rem; } }
+
+    /* ===== NAV ===== */
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      justify-content: center;
+      margin-top: 0.25rem;
+    }
+    nav a {
+      display: inline-flex;
+      align-items: center;
+      height: 3rem;
+      padding: 0 1.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border: solid 2px rgba(255,255,255,0.6);
+      margin-left: -2px;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+      position: relative;
+    }
+    nav a:first-child { margin-left: 0; }
+    nav a:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.95);
+    }
+    nav a.active {
+      background: rgba(255,255,255,0.2);
+      border-color: #fff;
+    }
+    @media (max-width: 480px) {
+      nav { flex-direction: column; align-items: center; gap: 0.5rem; }
+      nav a { margin-left: 0; width: 12rem; justify-content: center; }
+    }
+
+    /* ===== PANEL OVERLAY ===== */
+    #panels-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ===== PANEL ===== */
+    .panel {
+      display: none;
+      position: relative;
+      background: rgba(27, 31, 34, 0.92);
+      border: solid 1px rgba(255,255,255,0.12);
+      padding: 3.5rem 3.5rem 2.5rem;
+      width: min(90vw, 54rem);
+      max-height: 90vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      pointer-events: auto;
+      opacity: 0;
+      transform: translateY(1.5rem) scale(0.98);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.15) transparent;
+    }
+    .panel::-webkit-scrollbar { width: 5px; }
+    .panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+    .panel.is-active { display: block; }
+    .panel.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* Close button */
+    .panel-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      border: solid 1px rgba(255,255,255,0.3);
+      transition: opacity 0.2s ease, border-color 0.2s ease;
+    }
+    .panel-close:hover { opacity: 1; border-color: rgba(255,255,255,0.7); }
+
+    /* Panel image (banner) */
+    .panel .image {
+      display: block;
+      width: calc(100% + 7rem);
+      margin: -3.5rem -3.5rem 2.5rem;
+      overflow: hidden;
+      max-height: 18rem;
+    }
+    .panel .image img {
+      width: 100%;
+      height: 18rem;
+      object-fit: cover;
+      display: block;
+      opacity: 0.85;
+    }
+    @media (max-width: 736px) {
+      .panel { padding: 2.5rem 2rem 2rem; }
+      .panel .image { width: calc(100% + 4rem); margin: -2.5rem -2rem 2rem; }
+    }
+
+    /* Panel typography */
+    .panel h2 {
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 0 0 1rem;
+      line-height: 1.3;
+    }
+    .panel p {
+      font-size: 1rem;
+      line-height: 1.85;
+      opacity: 0.8;
+      margin: 0 0 1.25rem;
+    }
+    .panel a {
+      color: #6fc3df;
+      border-bottom: dotted 1px rgba(111,195,223,0.5);
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .panel a:hover { color: #9ad8ef; border-bottom-color: rgba(154,216,239,0.5); }
+    .panel hr {
+      border: 0;
+      border-top: solid 1px rgba(255,255,255,0.1);
+      margin: 2rem 0;
+    }
+
+    /* ===== WELCOME PANEL ===== */
+    .welcome-profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .welcome-profile img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(255,255,255,0.25);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+    .welcome-profile h3 {
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+    .welcome-profile .role {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 1rem;
+    }
+    .welcome-profile .bio {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      opacity: 0.8;
+      max-width: 38rem;
+    }
+
+    /* ===== WORK — PROJECT GRID ===== */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 680px) {
+      .project-grid { grid-template-columns: 1fr; }
+    }
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      border: solid 1px rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .project-card:hover {
+      border-color: rgba(255,255,255,0.3);
+      transform: translateY(-3px);
+    }
+    .project-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+    .project-card:hover img { opacity: 1; }
+    .project-card .project-name {
+      padding: 0.65rem 0.85rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    /* ===== CERTIFICATES GALLERY ===== */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 500px) {
+      .cert-grid { grid-template-columns: 1fr; }
+    }
+    .cert-card {
+      border: solid 1px rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+    .cert-card:hover { border-color: rgba(255,255,255,0.3); }
+    .cert-card img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      display: block;
+      opacity: 0.8;
+    }
+    .cert-card .cert-info {
+      padding: 0.75rem 0.85rem;
+    }
+    .cert-card .cert-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-bottom: 0.6rem;
+    }
+    .cert-card .cert-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .cert-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      height: 2.1rem;
+      font-family: "Source Sans 3", sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: solid 1px rgba(255,255,255,0.3);
+      background: transparent;
+      color: #fff;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .cert-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.7); }
+    .cert-btn.primary { background: rgba(255,255,255,0.1); }
+
+    /* ===== PDF MODAL ===== */
+    #pdf-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9990;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+    }
+    #pdf-modal.active { display: flex; }
+    #pdf-modal .modal-inner {
+      position: relative;
+      width: min(90vw, 900px);
+      height: 80vh;
+      background: #1b1f22;
+      border: solid 1px rgba(255,255,255,0.15);
+      display: flex;
+      flex-direction: column;
+    }
+    #pdf-modal .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+      border-bottom: solid 1px rgba(255,255,255,0.1);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    #pdf-modal .modal-close {
+      cursor: pointer;
+      opacity: 0.5;
+      border: solid 1px rgba(255,255,255,0.3);
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: opacity 0.2s ease;
+    }
+    #pdf-modal .modal-close:hover { opacity: 1; }
+    #pdf-modal iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+    }
+
+    /* ===== CONTACT FORM ===== */
+    .panel form { display: flex; flex-direction: column; gap: 1rem; }
+    .panel .fields { display: flex; flex-direction: column; gap: 0.85rem; }
+    .panel .field label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.65;
+      margin-bottom: 0.25rem;
+    }
+    .panel .field input,
+    .panel .field textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: solid 1px rgba(255,255,255,0.2);
+      color: #fff;
+      font-family: "Source Sans 3", sans-serif;
+      font-size: 0.95rem;
+      padding: 0.65rem 1rem;
+      outline: none;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      resize: vertical;
+      appearance: none;
+    }
+    .panel .field input:focus,
+    .panel .field textarea:focus {
+      border-color: rgba(111,195,223,0.6);
+      background: rgba(255,255,255,0.08);
+    }
+    .panel .field input::placeholder,
+    .panel .field textarea::placeholder { opacity: 0.35; }
+    .panel .field textarea { min-height: 7rem; }
+
+    /* Form success/error messages */
+    .form-msg {
+      display: none;
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      border: solid 1px;
+      margin-top: 0.5rem;
+    }
+    .form-msg.success { border-color: rgba(111,223,150,0.5); color: #7fdfa0; background: rgba(111,223,150,0.07); }
+    .form-msg.error   { border-color: rgba(223,111,111,0.5); color: #df8080; background: rgba(223,111,111,0.07); }
+    .form-msg.show    { display: block; }
+
+    /* Buttons */
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .actions .button,
+    .actions input[type="submit"],
+    .actions button[type="submit"] {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 3rem;
+      padding: 0 2rem;
+      font-family: "Source Sans 3", sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+      border: solid 2px rgba(255,255,255,0.55);
+      background: transparent;
+      color: #fff;
+    }
+    .actions .button:hover,
+    .actions input[type="submit"]:hover,
+    .actions button[type="submit"]:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.9);
+    }
+    .actions .button.primary,
+    .actions input[type="submit"].primary,
+    .actions button[type="submit"].primary {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.85);
+    }
+    .actions .button.primary:hover,
+    .actions input[type="submit"].primary:hover,
+    .actions button[type="submit"].primary:hover {
+      background: rgba(255,255,255,0.25);
+    }
+
+    /* ===== FOOTER ===== */
+    #footer {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    #footer.is-hidden {
+      opacity: 0;
+      transform: translateY(1rem);
+      pointer-events: none;
+    }
+    .icons {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+    .icons li a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      font-size: 0.95rem;
+      border: solid 1px rgba(255,255,255,0.3);
+      border-radius: 50%;
+      opacity: 0.6;
+      transition: opacity 0.2s ease, border-color 0.2s ease;
+    }
+    .icons li a:hover { opacity: 1; border-color: rgba(255,255,255,0.75); }
+
+    /* ===== MOBILE PANEL ===== */
+    @media (max-width: 736px) {
+      .panel { width: 95vw; max-height: 85vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="fade-cover"></div>
+  <div id="bg"></div>
+
+  <div id="wrapper">
+
+    <!-- Header -->
+    <header id="header">
+      <div class="logo">Welcome</div>
+      <p>eat(); &nbsp; sleep(); &nbsp; code(); &nbsp; repeat();</p>
+      <nav id="nav">
+        <a href="#welcome"      data-panel="welcome">Welcome</a>
+        <a href="#work"         data-panel="work">Work</a>
+        <a href="#certificates" data-panel="certificates">Certificates</a>
+        <a href="#contact"      data-panel="contact">Contact</a>
+      </nav>
+    </header>
+
+    <!-- Footer — social icons only, no copyright -->
+    <footer id="footer">
+      <ul class="icons" id="social-icons">
+        <li><a id="link-instagram" title="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a></li>
+        <li><a id="link-facebook"  title="Facebook"  target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a></li>
+        <li><a id="link-github"    title="GitHub"    target="_blank" rel="noopener"><i class="fab fa-github"></i></a></li>
+        <li><a id="link-twitter"   title="Twitter/X" target="_blank" rel="noopener"><i class="fab fa-x-twitter"></i></a></li>
+      </ul>
+    </footer>
+
+  </div><!-- /#wrapper -->
+
+  <!-- PDF Modal -->
+  <div id="pdf-modal">
+    <div class="modal-inner">
+      <div class="modal-header">
+        <span id="pdf-modal-title">Certificate</span>
+        <span class="modal-close" id="pdf-modal-close"><i class="fas fa-times"></i></span>
+      </div>
+      <iframe id="pdf-modal-frame" src="" title="Certificate PDF"></iframe>
+    </div>
+  </div>
+
+  <!-- Panels Overlay -->
+  <div id="panels-overlay">
+
+    <!-- WELCOME -->
+    <article class="panel" id="panel-welcome">
+      <span class="panel-close" data-close><i class="fas fa-times"></i></span>
+      <h2>Welcome</h2>
+
+      <div class="welcome-profile">
+        <!-- Profile photo — update IMAGES.profile in the config above -->
+        <img id="welcome-img" src="" alt="Profile Photo" />
+        <!-- Edit the name and role below -->
+        <h3>[Shawn Francis D. Afulugencia]</h3>
+        <div class="role">Soon to be a Game Developer &nbsp;|&nbsp; BSIT &nbsp;|&nbsp; Student</div>
+        <p class="bio">
+          Hi! I'm Shawn Francis, a student specializing in Web and Application Development. 
+          I enjoy creating clean, user-friendly websites and applications, and I aspire to become a Game Developer. 
+          Feel free to explore my work and reach out!
+        </p>
+      </div>
+
+      <div class="actions">
+        <a href="#work" data-panel="work" class="button primary">My Work</a>
+        <a href="#contact" data-panel="contact" class="button">Contact Me</a>
+      </div>
+    </article>
+
+    <!-- WORK -->
+    <article class="panel" id="panel-work">
+      <span class="panel-close" data-close><i class="fas fa-times"></i></span>
+      <h2>Work</h2>
+      <p>Here are some of my recent projects.</p>
+
+      <!-- Project cards are injected by JS using the PROJECTS config above -->
+      <div class="project-grid" id="project-grid"></div>
+    </article>
+
+    <!-- CERTIFICATES -->
+    <article class="panel" id="panel-certificates">
+      <span class="panel-close" data-close><i class="fas fa-times"></i></span>
+      <h2>Certificates</h2>
+      <p>A collection of certifications I've earned. Click View to open a certificate or Download to save it.</p>
+
+      <!-- Certificate cards are injected by JS using the CERTIFICATES config above -->
+      <div class="cert-grid" id="cert-grid"></div>
+    </article>
+
+    <!-- CONTACT -->
+    <article class="panel" id="panel-contact">
+      <span class="panel-close" data-close><i class="fas fa-times"></i></span>
+      <h2>Contact</h2>
+
+      <!-- FormSubmit — action is set dynamically from CONTACT_EMAIL config above -->
+      <form id="contact-form" method="POST" novalidate>
+        <!-- FormSubmit hidden fields -->
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="box" />
+        <input type="hidden" name="_next" value="" />
+
+        <div class="fields">
+          <div class="field">
+            <label for="c-name">Name</label>
+            <input type="text" id="c-name" name="name" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="c-email">Email</label>
+            <input type="email" id="c-email" name="email" placeholder="your@email.com" required />
+          </div>
+          <div class="field">
+            <label for="c-message">Message</label>
+            <textarea id="c-message" name="message" placeholder="Your message..." rows="4" required></textarea>
+          </div>
+        </div>
+
+        <div id="form-success" class="form-msg success">
+          <i class="fas fa-check-circle"></i>&nbsp; Your message was sent successfully! I'll get back to you soon.
+        </div>
+        <div id="form-error" class="form-msg error">
+          <i class="fas fa-exclamation-circle"></i>&nbsp; Please fill in all required fields correctly.
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="primary">Send Message</button>
+          <button type="button" id="form-reset">Reset</button>
+        </div>
+      </form>
+
+      <hr />
+
+      <ul class="icons" id="contact-social-icons">
+        <li><a id="cl-instagram" title="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a></li>
+        <li><a id="cl-facebook"  title="Facebook"  target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a></li>
+        <li><a id="cl-github"    title="GitHub"    target="_blank" rel="noopener"><i class="fab fa-github"></i></a></li>
+        <li><a id="cl-twitter"   title="Twitter/X" target="_blank" rel="noopener"><i class="fab fa-x-twitter"></i></a></li>
+      </ul>
+    </article>
+
+  </div><!-- /#panels-overlay -->
+
+  <script>
+    /* =====================================================
+       INIT — Apply configs to DOM
+       ===================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+
+      // --- Profile image ---
+      document.getElementById('welcome-img').src = IMAGES.profile;
+
+      // --- Social links (footer + contact panel) ---
+      const socialMap = [
+        ['link-instagram', 'cl-instagram', SOCIAL.instagram],
+        ['link-facebook',  'cl-facebook',  SOCIAL.facebook],
+        ['link-github',    'cl-github',    SOCIAL.github],
+        ['link-twitter',   'cl-twitter',   SOCIAL.twitter]
+      ];
+      socialMap.forEach(([footerId, contactId, url]) => {
+        const footer  = document.getElementById(footerId);
+        const contact = document.getElementById(contactId);
+        if (footer)  footer.href  = url;
+        if (contact) contact.href = url;
+      });
+
+      // --- Project cards ---
+      const grid = document.getElementById('project-grid');
+      PROJECTS.forEach((proj, i) => {
+        grid.innerHTML += `
+          <div class="project-card">
+            <img src="${proj.img}" alt="${proj.name}" onerror="this.style.background='rgba(255,255,255,0.05)';this.style.height='140px'" />
+            <div class="project-name">Project ${i+1} — ${proj.name}</div>
+          </div>`;
+      });
+
+      // --- Certificate cards ---
+      const certGrid = document.getElementById('cert-grid');
+      CERTIFICATES.forEach((cert) => {
+        const card = document.createElement('div');
+        card.className = 'cert-card';
+        card.innerHTML = `
+          <img src="${cert.img}" alt="${cert.name}" onerror="this.style.background='rgba(255,255,255,0.05)';this.style.height='130px'" />
+          <div class="cert-info">
+            <div class="cert-name">${cert.name}</div>
+            <div class="cert-actions">
+              <button class="cert-btn primary" data-view="${cert.pdf}" data-name="${cert.name}">
+                <i class="fas fa-eye"></i> View
+              </button>
+              <button class="cert-btn" data-download="${cert.pdf}" data-name="${cert.name}">
+                <i class="fas fa-download"></i> Download
+              </button>
+            </div>
+          </div>`;
+        certGrid.appendChild(card);
+      });
+
+      // --- Contact form action ---
+      document.getElementById('contact-form').action =
+        `https://formsubmit.co/${CONTACT_EMAIL}`;
+    });
+
+    /* =====================================================
+       FADE IN
+       ===================================================== */
+    window.addEventListener('load', () => {
+      setTimeout(() => document.body.classList.add('loaded'), 100);
+    });
+
+    /* =====================================================
+       PANEL SYSTEM
+       ===================================================== */
+    const bg        = document.getElementById('bg');
+    const header    = document.getElementById('header');
+    const footer    = document.getElementById('footer');
+    const navLinks  = document.querySelectorAll('[data-panel]');
+
+    let currentPanel = null;
+
+    function openPanel(id) {
+      const panel = document.getElementById('panel-' + id);
+      if (!panel) return;
+
+      if (currentPanel && currentPanel !== panel) {
+        currentPanel.classList.remove('is-visible', 'is-active');
+      }
+
+      currentPanel = panel;
+
+      navLinks.forEach(l => {
+        l.classList.toggle('active', l.dataset.panel === id);
+      });
+
+      bg.classList.add('is-blurred');
+      header.classList.add('is-hidden');
+      footer.classList.add('is-hidden');
+
+      panel.classList.add('is-active');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          panel.classList.add('is-visible');
+        });
+      });
+    }
+
+    function closePanel() {
+      if (!currentPanel) return;
+
+      currentPanel.classList.remove('is-visible');
+      const closing = currentPanel;
+      currentPanel = null;
+
+      navLinks.forEach(l => l.classList.remove('active'));
+      bg.classList.remove('is-blurred');
+      header.classList.remove('is-hidden');
+      footer.classList.remove('is-hidden');
+
+      closing.addEventListener('transitionend', () => {
+        closing.classList.remove('is-active');
+      }, { once: true });
+    }
+
+    document.addEventListener('click', e => {
+      // Nav / in-panel data-panel links
+      const trigger = e.target.closest('[data-panel]');
+      if (trigger) {
+        e.preventDefault();
+        const id = trigger.dataset.panel;
+        if (currentPanel && currentPanel.id === 'panel-' + id) {
+          closePanel();
+        } else {
+          openPanel(id);
+        }
+        return;
+      }
+
+      // Close button (X)
+      if (e.target.closest('[data-close]')) {
+        e.preventDefault();
+        closePanel();
+        return;
+      }
+
+      // Click outside panel to close
+      if (currentPanel && !e.target.closest('.panel') && !e.target.closest('#wrapper')) {
+        closePanel();
+      }
+    });
+
+
+    // Hash routing on load
+    window.addEventListener('load', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (['welcome','work','certificates','contact'].includes(hash)) {
+        setTimeout(() => openPanel(hash), 800);
+      }
+    });
+
+    /* =====================================================
+       PDF MODAL
+       ===================================================== */
+    const pdfModal      = document.getElementById('pdf-modal');
+    const pdfFrame      = document.getElementById('pdf-modal-frame');
+    const pdfModalTitle = document.getElementById('pdf-modal-title');
+    const pdfModalClose = document.getElementById('pdf-modal-close');
+
+    function openPDFModal(pdfPath, name) {
+      pdfModalTitle.textContent = name;
+      pdfFrame.src = pdfPath;
+      pdfModal.classList.add('active');
+    }
+
+    function closePDFModal() {
+      pdfModal.classList.remove('active');
+      pdfFrame.src = '';
+    }
+
+    pdfModalClose.addEventListener('click', closePDFModal);
+    pdfModal.addEventListener('click', e => {
+      if (e.target === pdfModal) closePDFModal();
+    });
+
+    document.addEventListener('click', e => {
+      const viewBtn = e.target.closest('[data-view]');
+      if (viewBtn) {
+        e.stopPropagation();
+        openPDFModal(viewBtn.dataset.view, viewBtn.dataset.name);
+        return;
+      }
+
+      const dlBtn = e.target.closest('[data-download]');
+      if (dlBtn) {
+        e.stopPropagation();
+        const a = document.createElement('a');
+        a.href = dlBtn.dataset.download;
+        a.download = dlBtn.dataset.name + '.pdf';
+        a.click();
+      }
+    });
+
+    /* =====================================================
+       CONTACT FORM — Client-side validation + FormSubmit
+       ===================================================== */
+    const contactForm = document.getElementById('contact-form');
+    const formSuccess = document.getElementById('form-success');
+    const formError   = document.getElementById('form-error');
+
+    contactForm.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const name    = document.getElementById('c-name').value.trim();
+      const email   = document.getElementById('c-email').value.trim();
+      const message = document.getElementById('c-message').value.trim();
+      const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      formSuccess.classList.remove('show');
+      formError.classList.remove('show');
+
+      if (!name || !emailRx.test(email) || !message) {
+        formError.classList.add('show');
+        return;
+      }
+
+      // Submit via FormSubmit AJAX
+      try {
+        const fd = new FormData(contactForm);
+        const res = await fetch(contactForm.action, {
+          method: 'POST',
+          body: fd,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          formSuccess.classList.add('show');
+          contactForm.reset();
+        } else {
+          formError.textContent = 'Something went wrong. Please try again.';
+          formError.classList.add('show');
+        }
+      } catch {
+        formError.textContent = 'Network error. Please try again later.';
+        formError.classList.add('show');
+      }
+    });
+
+    document.getElementById('form-reset').addEventListener('click', () => {
+      contactForm.reset();
+      formSuccess.classList.remove('show');
+      formError.classList.remove('show');
+    });
+  </script>
+</body>
+</html>
